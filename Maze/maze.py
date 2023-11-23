@@ -122,8 +122,8 @@ def set_obstacles(type:str, pos:tuple):
 
 
     Args:
-        type (str): the obstacle's type, 1 for 
-        pos (tuple): _description_
+        type (str): the obstacle's type, 1 for up, 2 for down
+        pos (tuple): coordinates in wich the obstacle may be placed
     """
     pass
     

@@ -43,6 +43,13 @@ from tkinter import ttk
 
 ## UI EXAMPLE, APP THAT CONVERTS POUNDS TO KILOS
 
+def calculateKilos(*args):
+    try:
+        val = pounds.get() 
+        kilos.set(str(round(val * 0.45359237,1)) + " Kgs")
+    except TclError:
+        print("Not a valid value")
+
 # Root window definition and Settings
 root = Tk()
 root.title("Auto SGPS")
@@ -54,7 +61,7 @@ root.configure(
     bg="purple"
 )
 root.wm_minsize(800, 600)
-root.columnconfigure(0,weight=1)
+root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
 # Main frame initialization and configuration
@@ -62,22 +69,30 @@ main_frame = ttk.Frame(root, padding=10)    # Creates the main frame, specifying
 main_frame.grid() # Positions the main frame with 10px padding inside the previously specified parent container
 
 # Pounds Input field with it's corresponding label
-pounds = str()
-pounds_input_label = ttk.Label(main_frame, text="Pounds").grid(column=2, row=1, sticky="S,W")
-pounds_input = ttk.Entry(main_frame, textvariable=pounds).grid(column=2, row=2, sticky="S,W")
+pounds = IntVar()
+pounds_input_label = ttk.Label(main_frame, text="Pounds").grid(column=2, row=1, sticky=(W))
+pounds_input = ttk.Entry(main_frame, textvariable=pounds, width=7)
+pounds_input.grid(column=1, row=1, sticky=(E))
 
 # Label to show the equivalent value in Kilos
-pounds = str()
-pounds_input_label = ttk.Label(main_frame, text="Pounds").grid(column=2, row=1, sticky="S,W")
-pounds_input = ttk.Entry(main_frame, textvariable=pounds).grid(column=2, row=2, sticky="S,W")
+kilos = StringVar(None,"0.0 Kgs")
+equals_label = ttk.Label(main_frame, text="=").grid(column=1, row=2, sticky="e")
+kilos_output_label = ttk.Label(main_frame, text=" Kgs", textvariable=kilos).grid(column=2, row=2, sticky="w")
+
+# Calculate Button
+calculate_button = ttk.Button(main_frame, text="Calculate", command=calculateKilos).grid(column=3, row=3)
+
+for child in main_frame.winfo_children(): 
+    child.grid_configure(padx=5, pady=5)
+pounds_input.focus()
+
+root.bind("<Return>", calculateKilos)
 
 # label1 = ttk.Label(main_frame, text="Yo mama fat as hell").grid(column=2,row=1)
 # btn1 =ttk.Button(main_frame,text="Got It!", command=root.destroy).grid(column=2,row=2)
 
 # print("Root Keys ->", root.keys(), "\nFrame Keys -> ", main_frame.keys())
 root.mainloop() # puts everything on the display, and responds to user input until the program terminates.
-
-
 
 def nose():
     pass
